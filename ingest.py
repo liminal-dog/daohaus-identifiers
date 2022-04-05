@@ -59,6 +59,17 @@ def update_identifiers(url, conn):
     print("identifier information added")
 
 
+def try_value(row, name):
+    try:
+        x = row[name].replace("'", '"')
+        items = json.loads(x)
+        item = items[0].lower()
+    except:
+        item = ""
+
+    return item
+
+
 if __name__ == "__main__":
 
     load_dotenv()
@@ -90,69 +101,14 @@ if __name__ == "__main__":
         else:
             current_dict["name"] = ""
 
-        try:
-            x = row["twitter"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["twitter"] = item
-
-        try:
-            x = row["forum"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["forum"] = item
-
-        try:
-            x = row["discord"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["discord"] = item
-
-        try:
-            x = row["blog"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["blog"] = item
-
-        try:
-            x = row["documentation"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["documentation"] = item
-
-        try:
-            x = row["opensea"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["opensea"] = item
-
-        try:
-            x = row["gallery"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["gallery"] = item
-
-        try:
-            x = row["github"].replace("'", '"')
-            items = json.loads(x)
-            item = items[0]
-        except:
-            item = ""
-        current_dict["github"] = item
+        current_dict["twitter"] = try_value(row, "twitter")
+        current_dict["forum"] = try_value(row, "forum")
+        current_dict["discord"] = try_value(row, "discord")
+        current_dict["blog"] = try_value(row, "blog")
+        current_dict["documentation"] = try_value(row, 'documentation')
+        current_dict["opensea"] = try_value(row, 'opensea')
+        current_dict["gallery"] = try_value(row, 'gallery')
+        current_dict["github"] = try_value(row, 'github')
 
         identifiers_dict.append(current_dict)
 
